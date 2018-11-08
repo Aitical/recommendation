@@ -1,6 +1,7 @@
 # recommenddation
 基于Movielens数据集的简单推荐系统实现
 -------
+×这个文档最后还是希望能用英文写×
 ### 执行环境及依赖:
 - Ubuntu 18.04
 - Python 3.6
