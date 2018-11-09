@@ -1,4 +1,4 @@
-# recommenddation
+# recommendation
 基于Movielens数据集的简单推荐系统实现
 -------
 ×这个文档最后还是希望能用英文写×
