@@ -14,9 +14,19 @@ class Item_msg(models.Model):
     rating = models.DecimalField(default=0, decimal_places=1, max_digits=2)
     times = models.IntegerField(default=0)
     hot_point = models.IntegerField(default=0)
+    label = models.CharField(default='0')
+
 
     def __str__(self):
         return self.title
 
 
+class Item_labels(models.Model):
+    """
+    电影标签表
+    """
+    label = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.label
 

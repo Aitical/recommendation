@@ -10,23 +10,78 @@
 
     <!-- css -->
     <link rel="stylesheet" href="{% static 'api/css/bootstrap.min.css' %}">
+
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{% static 'api/css/pace.css' %}">
     <link rel="stylesheet" href="{% static 'api/css/custom.css' %}">
+    <!-- Latest compiled and minified CSS -->
 
-    <!-- js -->
-    <script src="{% static 'api/js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'api/js/bootstrap.min.js' %}"></script>
+
+  <!-- js -->
+    <script src="{% static 'api/js/jquery-1.11.1.min.js' %}"></script>
+
     <script src="{% static 'api/js/pace.min.js' %}"></script>
     <script src="{% static 'api/js/modernizr.custom.js' %}"></script>
+    <script src="{% static 'api/js/typeahead.js' %}"></script>
+    <!-- Latest compiled and minified JavaScript -->
+<script src="{% static 'api/js/bootstrap.min.js' %}"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+
 </head>
 
 <body>
+
+<div id="firstModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="gridModalLabel">Welcome!</h4>
+      </div>
+
+
+      <div class="modal-body">
+        <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+            <label for="recipient-name" class="col-form-label">第一次使用请填写您的邮箱以帮助我们</label>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Your email:</label>
+            <input type="text" name="email" class="form-control" id="recipient-name">
+</div>
+
+            <label for="recipient-name" class="col-form-label">请选择您感兴趣的标签</label>
+<div class="form-group">
+            {% for label in labels %}
+            <label class="checkbox-inline">
+            <input type="checkbox" name="labels" value="{{ label }}"> {{ label }}
+            </label>
+            {% endfor %}
+</div>
+        <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+        </form>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+    {% if user_exist|safe == 'False' %}
+        $('#firstModal').modal('show');
+    {% endif %}
+
+</script>
+
 <div class="container">
     <header id="site-header">
         <div class="row">
             <div class="col-md-4 col-sm-5 col-xs-8">
                 <div class="logo">
+
                     <h1><a href=""><b>Movie</b>Rs</a></h1>
                 </div>
             </div><!-- col-md-4 -->
@@ -37,7 +92,7 @@
                     <div id="search-form" class="search-form">
                         <!-- FIXME 搜索接口-->
                         <form role="search" method="get" id="searchform" action="#">
-                            <input type="search" placeholder="搜索" required>
+                            <input id ="typesearch" data-provide="typeahead" type="search" placeholder="搜索" required>
                             <button type="submit"><span class="ion-ios-search-strong"></span></button>
                         </form>
                     </div>
@@ -187,4 +242,12 @@
 <script src="{% static 'api/js/script.js' %}"></script>
 
 </body>
+<script>
+    $('#typesearch').typeahead({
+      source: {{ movies|safe }}
+
+   });
+        $('.selectpicker').searchableSelect();
+
+</script>
 </html>
