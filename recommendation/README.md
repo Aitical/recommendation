@@ -1,7 +1,7 @@
 # recommendation
 基于Movielens数据集的简单推荐系统实现
 
-
+![模型结构](https://raw.githubusercontent.com/Aitical/recommendation/master/img/model_structure.jpg)
 
 ### 执行环境及依赖:
 - Ubuntu 18.04
