@@ -58,15 +58,20 @@
                 <article class="post post-{{ item.id }}">
                     <header class="entry-header">
                         <h1 class="entry-title">
-                            <a href="">{{ item.title }}</a>
+                            <a href="{{ item.url }}">{{ item.title }}</a>
                         </h1>
                         <div class="entry-meta">
 
                             <span class="post-date"><a href="#">{{ item.date }}</a></span>
 
-                            <span class="comments-link"><a href="#">{{ item.rating }} rating</a></span>
-                            <span class="views-count"><a href="#">{{ item.times }} views</a></span>
-                            <span class="comments-link"><a href="#">{{ item.hot_point }} hot</a></span>
+                            <span class="comments-link"><a href="#">{{ item.rating }} Rating</a></span>
+                             <span class="comments-link"><a href="#">{{ item.times }} Views</a></span>
+                            {% if item.hot_point > 1000 %}
+                                <span class="views-count"><a href="#"><font color="red">{{ item.hot_point }} HOT!</font></a></span>
+                            {% else %}
+                             <span class="views-count"><a href="#">{{ item.hot_point }} HOT</a></span>
+
+                            {% endif %}
                         </div>
                     </header>
                 </article>
@@ -80,63 +85,47 @@
                 -->
                 <div class="pagination">
                     <ul>
-                        <li><a href="1">1</a></li>
-                        <li><a href="">...</a></li>
-                        <li><a href="">4</a></li>
-                        <li><a href="">5</a></li>
-                        <li class="current"><a href="">6</a></li>
-                        <li><a href="">7</a></li>
-                        <li><a href="">8</a></li>
-                        <li><a href="">...</a></li>
-                        <li><a href="">11</a></li>
+                        {% for page in pages %}
+                            {% if forloop.first %}
+
+                                <li><a href="/index/{{ page}}">{{ page }}</a></li>
+                                <li><a href="">...</a></li>
+                            {% elif page == current_page %}
+                                <li><a href="/index/{{ page}}"><font color="black">{{ page }}</font></a></li>
+                            {% elif forloop.last %}
+                                <li><a href="">...</a></li>
+                                <li><a href="/index/{{ page}}">{{ page }}</a></li>
+                            {% else %}
+                                <li><a href="/index/{{ page}}">{{ page }}</a></li>
+                            {% endif %}
+                        {% endfor %}
                     </ul>
                 </div>
             </main>
             <aside class="col-md-4">
                 <div class="widget widget-recent-posts">
-                    <h3 class="widget-title">最新文章</h3>
+                    <h3 class="widget-title">Recommendation</h3>
                     <ul>
+                        {% for item in recommendation %}
                         <li>
-                            <a href="#">Django 博客开发入门教程：前言</a>
+                            <a href="#">{{ item.title }}</a>
                         </li>
-                        <li>
-                            <a href="#">Django 博客使用 Markdown 自动生成文章目录</a>
-                        </li>
-                        <li>
-                            <a href="#">部署 Django 博客</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="widget widget-archives">
-                    <h3 class="widget-title">归档</h3>
-                    <ul>
-                        <li>
-                            <a href="#">2017 年 5 月</a>
-                        </li>
-                        <li>
-                            <a href="#">2017 年 4 月</a>
-                        </li>
-                        <li>
-                            <a href="#">2017 年 3 月</a>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
 
                 <div class="widget widget-category">
-                    <h3 class="widget-title">分类</h3>
+                    <h3 class="widget-title">Select by labels</h3>
                     <ul>
+                        {% for label in labels %}
                         <li>
-                            <a href="#">Django 博客教程 <span class="post-count">(13)</span></a>
+                            <a href="#">{{ label }}</a>
                         </li>
-                        <li>
-                            <a href="#">Python 教程 <span class="post-count">(11)</span></a>
-                        </li>
-                        <li>
-                            <a href="#">Django 用户认证 <span class="post-count">(8)</span></a>
-                        </li>
+                        {% endfor %}
                     </ul>
                 </div>
 
+                <!--
                 <div class="widget widget-tag-cloud">
                     <h3 class="widget-title">标签云</h3>
                     <ul>
@@ -172,9 +161,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="rss">
-                    <a href=""><span class="ion-social-rss-outline"></span> RSS 订阅</a>
-                </div>
+                -->
             </aside>
         </div>
     </div>
